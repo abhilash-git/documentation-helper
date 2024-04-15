@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from langchain_pinecone import PineconeVectorStore
 
 load_dotenv()
 
@@ -8,14 +9,12 @@ from langchain_community.document_loaders import ReadTheDocsLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Pinecone as PineconeLangChain
-from pinecone import Pinecone
-
-
-pc = Pinecone(
-    api_key=os.environ.get("PINECONE_API_KEY"),
-)
 
 INDEX_NAME = "langchain-doc-index"
+
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+pc = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
 
 
 def ingest_docs():
@@ -33,7 +32,6 @@ def ingest_docs():
         new_url = new_url.replace("langchain-docs", "https:/")
         doc.metadata.update({"source": new_url})
 
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     print(f"Going to add {len(documents)} to Pinecone")
     PineconeLangChain.from_documents(documents, embeddings, index_name=INDEX_NAME)
     print("****Loading to vectorstore done ***")
