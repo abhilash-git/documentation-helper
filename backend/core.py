@@ -4,6 +4,7 @@ from langchain.chains import RetrievalQA
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_pinecone import PineconeVectorStore
 from const import INDEX_NAME
+load_dotenv()
 
 
 def from_llm(query: str) -> str:
@@ -23,7 +24,7 @@ def from_llm(query: str) -> str:
 
 
 if __name__ == "__main__":
-    load_dotenv()
+    # load_dotenv()
     query = "what is a langchain"
     ret = from_llm(query)
     print(ret)
