@@ -5,6 +5,9 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders.readthedocs import ReadTheDocsLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
+testing
+
+
 
 
 def ingest_docs():
